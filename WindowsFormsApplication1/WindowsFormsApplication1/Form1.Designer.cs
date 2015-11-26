@@ -35,13 +35,7 @@ namespace WindowsFormsApplication1
             this.trackbar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.trackbar1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // trackbar1
-            // 
-            this.trackbar1.Location = new System.Drawing.Point(186, 31);
-            this.trackbar1.Name = "trackbar1";
-            this.trackbar1.Size = new System.Drawing.Size(104, 45);
-            this.trackbar1.TabIndex = 7;
+          
             // 
             // Form1
             // 
@@ -53,28 +47,9 @@ namespace WindowsFormsApplication1
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackbar1)).EndInit();
             this.ResumeLayout(false);
+            
 
     }
-
-        // PROBLEM nemuzu se dostat k LabelField
-        private void label3_Click(object sender, EventArgs e)
-        {
-            for (int i = 3; i < 9; i++)
-            {
-                //labelField[i].Location(); 
-                    }
-        }
-
-        private void trackbar1_ValueChanged(object sender, EventArgs e)
-        {
-            // Zjistíme jezdce:
-            TrackBar tb = (TrackBar)sender;
-            //label1.Text = tb.Value.ToString();
-            // Nastavíme průhlednost okna dle hodnoty jezdce:
-            this.Opacity = 0.5 + 0.01 * tb.Value;
-        }
-
-
 
 
         #endregion
