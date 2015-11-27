@@ -8,16 +8,16 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    class Zaznam
+    public class Zaznam
     {
         //string nazev;
       
         List<Zaznam> listPodZaznamu = new List<Zaznam>();
-        Form mForm;
+        Form1 mForm;
         float rtp;
         float vyhra;
         //Controls
-        public Label lNazev;
+        public LinkLabel lNazev;
         public TrackBar TRtp;
         public Label lRtp;
         public Label lWin;
@@ -26,10 +26,10 @@ namespace WindowsFormsApplication1
         Point levyHorni;
         Point LevySpodni;
 
-        public Zaznam(string _nazev,int _rozsahTrackbaru,float _vyhra,Form _mForm)
+        public Zaznam(string _nazev,int _rozsahTrackbaru,float _vyhra,Form1 _mForm)
         {
             
-            lNazev = new Label();
+            lNazev = new LinkLabel();
             TRtp = new TrackBar();
 
             lNazev.Text = _nazev;
@@ -38,14 +38,16 @@ namespace WindowsFormsApplication1
             vyhra = _vyhra;
             mForm = _mForm;
         }
-        public void AddPodZaznam(string _nazev, int _rozsahTrackbaru, float _vyhra, Form _mForm)
+        public void AddPodZaznam(string _nazev, int _rozsahTrackbaru, float _vyhra, Form1 _mForm)
         {
             listPodZaznamu.Add(new Zaznam(_nazev, _rozsahTrackbaru, _vyhra, _mForm));
         }
-        
 
-
-
+        internal bool MaPodzaznam()
+        {
+            if (listPodZaznamu.Count != 0) return true;
+            else return false;
+        }
     }
 }
  

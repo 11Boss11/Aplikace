@@ -42,6 +42,8 @@ namespace WindowsFormsApplication1
             // work();
             S = new Sestava(95,this);
             S.AddZaznam("ahoj", 100, 324, this);
+            S.AddPodZaznam("cau", 100, 324, this);
+            S.ShowControls();
         }
 
         public void work()
@@ -124,8 +126,8 @@ namespace WindowsFormsApplication1
         private void linkLabel1_LinkClicked(object sender, EventArgs e)
         {
             Point umisteni;
-            LinkLabel someLabel= sender as LinkLabel;
-            if(someLabel.LinkColor== System.Drawing.Color.Blue)
+            LinkLabel someLabel = sender as LinkLabel;
+            if (someLabel.LinkColor == System.Drawing.Color.Blue)
             {
                 someLabel.LinkColor = System.Drawing.Color.Red;
 
@@ -148,28 +150,28 @@ namespace WindowsFormsApplication1
                                     linkLabelField[i].Location = new Point(30, pocet * 40 + i * 20);
                                 }
                             }
-                        /*    else
-                            {
-                                for (int i = 0; i < pocet; i++)
+                            /*    else
                                 {
-                                    labelField[i] = CreateLabel(50, "label" + i.ToString());
-                                    labelField[i].Location = new Point(30, 60 + i * 20);
+                                    for (int i = 0; i < pocet; i++)
+                                    {
+                                        labelField[i] = CreateLabel(50, "label" + i.ToString());
+                                        labelField[i].Location = new Point(30, 60 + i * 20);
 
-                                }
+                                    }
 
-                                for (int i = 1; i < pocetLink; i++)
-                                {
-                                    linkLabelField[i].Location = new Point(30, pocet * 40 + i * 20);
+                                    for (int i = 1; i < pocetLink; i++)
+                                    {
+                                        linkLabelField[i].Location = new Point(30, pocet * 40 + i * 20);
+                                    }
                                 }
-                            }
-                            */
+                                */
                             break;
-                           
+
                         }
 
                     case "Hvezda":
                         {
-                            if(linkLabelField[0].LinkColor==Color.Blue)
+                            if (linkLabelField[0].LinkColor == Color.Blue)
                             {
                                 for (int i = 0; i < pocet; i++)
                                 {
@@ -224,7 +226,7 @@ namespace WindowsFormsApplication1
             else
             {
                 someLabel.LinkColor = Color.Blue;
-                switch(someLabel.Text)
+                switch (someLabel.Text)
                 {
                     case "Zaklad":
                         for (int i = 0; i < 3; i++)
@@ -232,7 +234,7 @@ namespace WindowsFormsApplication1
                             labelField[i].Dispose();
                         }
                         Point bod = linkLabelField[1].Location;
-                        linkLabelField[1].Location = new Point(bod.X, bod.Y - pocet * 40+40);
+                        linkLabelField[1].Location = new Point(bod.X, bod.Y - pocet * 40 + 40);
                         break;
                     case "Hvezda":
                         for (int i = 0; i < 3; i++)
@@ -241,21 +243,47 @@ namespace WindowsFormsApplication1
                         }
                         break;
                 }
-                
-    
+
+
             }
-            
+
+
+
+
+
+
+
+        }
+        public void setEventHandler(Zaznam zaznam)
+        {
+            zaznam.lNazev.Click += new EventHandler(this.linkLabel_Click);
+        }
+        
+        private void linkLabel_Click(object sender, EventArgs e)
+        {
+            LinkLabel l = sender as LinkLabel;
+            l.Text = "neeeee";
+           /* Zaznam z =sender as Zaznam;
+            z.lNazev.Text = "jooooo";
+
+    */
+           // MessageBox.Show("Jsem funkcni!");
+
+
            
 
+         }
+        
 
 
-            
-            
-        }
        private void posunSe(int cisloLinkLabelu, Label [] pole,int delkaPole,int posunO)
         {
 
         }
+
+
+
+
 
     }
 }
