@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1
         Form1 mForm;
         float ciloveRTP;
         float prumernaVyhra;
-        List <Zaznam> listZaznamu=new List<Zaznam>();
+       static List <Zaznam> listZaznamu=new List<Zaznam>();
        // List<int> list = new List<int>();
 
 
@@ -31,20 +31,29 @@ namespace WindowsFormsApplication1
         }
         public void AddPodZaznam(string _nazev, int _rozsahTrackbaru, float _vyhra, Form1 _mForm)
         {
+            if (!listZaznamu.Last().MaPodzaznam()) mForm.setEventHandler(listZaznamu.Last());
             listZaznamu.Last().AddPodZaznam(_nazev, _rozsahTrackbaru, _vyhra, _mForm);
-            mForm.setEventHandler(listZaznamu.Last());
            //listZaznamu.Last().lNazev.Click += new EventHandler(mForm.linkLabel_Click);
             
         
         }
+        public List<Zaznam> GetZaznamy()
+        {
+            return listZaznamu;
+        } 
         public void ShowControls()
         {
             foreach (Zaznam z in listZaznamu)
             {
                 z.lNazev.Left = 20;
                 if (!z.MaPodzaznam()) z.lNazev.LinkColor = Color.Black;
+                else z.lNazev.LinkColor = Color.Blue;
+                z.lNazev.AutoSize = true;
                 //z.lNazev 
                 mForm.Controls.Add(z.lNazev);
+                z.levyHorni = z.lNazev.Location;
+                z.LevySpodni = new Point(z.lNazev.Location.X, z.lNazev.Location.Y + z.lNazev.Height);
+
 
                 /*abel NewLabel = new Label();
             NewLabel.Width = 50; // Space little less than 2/3

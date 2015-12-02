@@ -23,8 +23,8 @@ namespace WindowsFormsApplication1
         public Label lWin;
         public Label lOtacky;
         //umisteni
-        Point levyHorni;
-        Point LevySpodni;
+       public Point levyHorni;
+        public Point LevySpodni;
 
         public Zaznam(string _nazev,int _rozsahTrackbaru,float _vyhra,Form1 _mForm)
         {
@@ -42,7 +42,10 @@ namespace WindowsFormsApplication1
         {
             listPodZaznamu.Add(new Zaznam(_nazev, _rozsahTrackbaru, _vyhra, _mForm));
         }
-
+        public List<Zaznam> GetPodZaznamy()
+        {
+            return listPodZaznamu;
+        }
         internal bool MaPodzaznam()
         {
             if (listPodZaznamu.Count != 0) return true;

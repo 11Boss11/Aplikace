@@ -12,11 +12,7 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        struct details
-        {
-            int pocet;
-            //hodnoty
-        }
+       
         private TrackBar trackbar1;
         static int pocet = 3;
         static int pocetLink = 2;
@@ -29,9 +25,6 @@ namespace WindowsFormsApplication1
         //SESTAVA
         Sestava S;
 
-        //patri k work
-        ListBox list = new ListBox();
-        int[] pole = new int[20];
 
 
 
@@ -41,53 +34,18 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             // work();
             S = new Sestava(95,this);
-            S.AddZaznam("ahoj", 100, 324, this);
+            S.AddZaznam("Zaklad", 100, 324, this);
             S.AddPodZaznam("cau", 100, 324, this);
+            S.AddPodZaznam("neco", 100, 324, this);
+            S.AddPodZaznam("necoDalsiho", 100, 324, this);
+            
+            S.AddZaznam("Hvezda", 100, 324, this);
+            S.AddPodZaznam("cau", 100, 324, this);
+            S.AddPodZaznam("neco", 100, 324, this);
+            S.AddPodZaznam("necoDalsiho", 100, 324, this);
+
             S.ShowControls();
         }
-
-        public void work()
-        {
-
-
-            for (int i = 0; i < pocetLink; i++)
-            {
-                linkLabelField[i] = CreateLinkLabel (50, "LinkLabel" + i.ToString());
-                linkLabelField[i].Location = new Point(30, 40 + i * 20);
-                //label se muze rozkliknout
-                   if (true)
-                  {
-               
-                      linkLabelField[i].Click += new EventHandler(this.linkLabel1_LinkClicked);
-                  }
-               // MessageBox.Show(i.ToString());
-
-            }
-            linkLabelField[0].Text = "Zaklad";
-            linkLabelField[1].Text = "Hvezda";
-
-
-            /*   for (int i = 0; i < 20; i++)
-               {
-                   pole[i] = i;
-               }
-
-               for (int i = 0; i < pocet; i++)
-               {
-                   labelField[i] = CreateLabel(50, "label" + i.ToString());
-                   labelField[i].Location = new Point(30, 40 + i * 20);
-                   //label se muze rozkliknout
-                 //    if (i == 2)
-                 //  {
-                 //      labelField[i].Click += new EventHandler(this.label3_Click);
-                 //  }
-
-               }
-               labelField[0].Text = "sedm";
-               labelField[1].Text = "hveyda";
-               */
-        }
-
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -95,165 +53,7 @@ namespace WindowsFormsApplication1
 
         }
         //creating labels
-        private Label CreateLabel(int TopValue, string LabelName)
-        {
-            // Label Control
-            Label NewLabel = new Label();
-            NewLabel.Width = 50; // Space little less than 2/3
-            NewLabel.Height = 25;
-            NewLabel.Left = 0; // Start at the left edge of the panel1
-            NewLabel.Top = TopValue;
-            this.Controls.Add(NewLabel);
-            NewLabel.TextAlign = ContentAlignment.MiddleRight;
-            NewLabel.Text = LabelName;
-            return NewLabel;
-        }
-        private LinkLabel CreateLinkLabel(int TopValue, string LabelName)
-        {
-            // Label Control
-            LinkLabel NewLabel = new LinkLabel();
-            NewLabel.Width = 50; // Space little less than 2/3
-            NewLabel.Height = 25;
-            NewLabel.Top = TopValue;
-            NewLabel.LinkColor = Color.Blue;
-            this.Controls.Add(NewLabel);
-            NewLabel.TextAlign = ContentAlignment.MiddleRight;
-            NewLabel.Name = LabelName;
-            return NewLabel;
-            
-        }
-
-        private void linkLabel1_LinkClicked(object sender, EventArgs e)
-        {
-            Point umisteni;
-            LinkLabel someLabel = sender as LinkLabel;
-            if (someLabel.LinkColor == System.Drawing.Color.Blue)
-            {
-                someLabel.LinkColor = System.Drawing.Color.Red;
-
-                switch (someLabel.Text)
-                {
-                    case "Zaklad":
-                        {
-                            if (linkLabelField[1].LinkColor == Color.Blue)
-                            {
-
-                                for (int i = 0; i < pocet; i++)
-                                {
-                                    labelField[i] = CreateLabel(50, "label" + i.ToString());
-                                    labelField[i].Location = new Point(30, 60 + i * 20);
-
-                                }
-
-                                for (int i = 1; i < pocetLink; i++)
-                                {
-                                    linkLabelField[i].Location = new Point(30, pocet * 40 + i * 20);
-                                }
-                            }
-                            /*    else
-                                {
-                                    for (int i = 0; i < pocet; i++)
-                                    {
-                                        labelField[i] = CreateLabel(50, "label" + i.ToString());
-                                        labelField[i].Location = new Point(30, 60 + i * 20);
-
-                                    }
-
-                                    for (int i = 1; i < pocetLink; i++)
-                                    {
-                                        linkLabelField[i].Location = new Point(30, pocet * 40 + i * 20);
-                                    }
-                                }
-                                */
-                            break;
-
-                        }
-
-                    case "Hvezda":
-                        {
-                            if (linkLabelField[0].LinkColor == Color.Blue)
-                            {
-                                for (int i = 0; i < pocet; i++)
-                                {
-                                    labelField2[i] = CreateLabel(50, "label" + i.ToString());
-                                    labelField2[i].Location = new Point(30, 90 + i * 20);
-
-                                }
-                                for (int i = 2; i < pocetLink; i++)
-                                {
-
-
-                                    linkLabelField[i].Location = new Point(30, 200 + pocet * 20);
-                                }
-                                break;
-                            }
-
-                            for (int i = 0; i < pocet; i++)
-                            {
-                                labelField2[i] = CreateLabel(50, "label" + i.ToString());
-                                labelField2[i].Location = new Point(30, 160 + i * 20);
-
-                            }
-                            for (int i = 2; i < pocetLink; i++)
-                            {
-
-
-                                linkLabelField[i].Location = new Point(30, 200 + pocet * 20);
-                            }
-
-                            break;
-                        }
-                    case "`Sedm":
-                        {
-
-                            for (int i = 0; i < pocet; i++)
-                            {
-                                labelField[i] = CreateLabel(50, "label" + i.ToString());
-                                labelField[i].Location = new Point(30, 160 + i * 20);
-
-                            }
-                            for (int i = 2; i < pocetLink; i++)
-                            {
-
-
-                                linkLabelField[i].Location = new Point(30, 200 + pocet * 40);
-                            }
-
-                            break;
-                        }
-                }
-            }
-            else
-            {
-                someLabel.LinkColor = Color.Blue;
-                switch (someLabel.Text)
-                {
-                    case "Zaklad":
-                        for (int i = 0; i < 3; i++)
-                        {
-                            labelField[i].Dispose();
-                        }
-                        Point bod = linkLabelField[1].Location;
-                        linkLabelField[1].Location = new Point(bod.X, bod.Y - pocet * 40 + 40);
-                        break;
-                    case "Hvezda":
-                        for (int i = 0; i < 3; i++)
-                        {
-                            labelField2[i].Dispose();
-                        }
-                        break;
-                }
-
-
-            }
-
-
-
-
-
-
-
-        }
+      
         public void setEventHandler(Zaznam zaznam)
         {
             zaznam.lNazev.Click += new EventHandler(this.linkLabel_Click);
@@ -261,25 +61,102 @@ namespace WindowsFormsApplication1
         
         private void linkLabel_Click(object sender, EventArgs e)
         {
-            LinkLabel l = sender as LinkLabel;
-            l.Text = "neeeee";
-           /* Zaznam z =sender as Zaznam;
-            z.lNazev.Text = "jooooo";
+            //MessageBox.Show("CLICK");
+              LinkLabel l = sender as LinkLabel;
+              Zaznam linkZaznam;
+              Point tempPoint = new Point();
 
-    */
-           // MessageBox.Show("Jsem funkcni!");
+            List<Zaznam> tempList = S.GetZaznamy();
+            linkZaznam = tempList.Last();
+
+            //hledam svuj zaznam
+            foreach (Zaznam z in tempList)
+            {
+
+                // TODO misto switche dej jako tuhle podminku dole
+                if (z.lNazev.Text == l.Text)
+                {
+                    //MessageBox.Show("Prochazim zaznam "+z.lNazev.Text);
+                    tempPoint = z.LevySpodni;
+                    tempPoint.X = tempPoint.X + 5;
+                    linkZaznam = z;
+                    tempList = z.GetPodZaznamy();
+
+                    break;
+                }
+                // TODO exception
+                else
+                {
+                    MessageBox.Show("ERROR");
+                    return;
+                }
+            }
+
+            #region Show
+            if (l.LinkColor == Color.Blue)
+              {
+
+                  l.LinkColor = Color.Red;
+                  //prochazim podzaznamy
+                  foreach (Zaznam z in tempList)
+                  {
+                    z.lNazev.LinkColor = Color.Black;
+                    z.lNazev.Location = tempPoint;
+                    z.lNazev.AutoSize = true;
+                    this.Controls.Add(z.lNazev);
+
+                    tempPoint.Y = tempPoint.Y + z.lNazev.Height;
+                     
+                  }
+                  linkZaznam.LevySpodni = tempPoint;
+
+              }
+            #endregion Show
+            #region Hide
+            else
+            {
+                  l.LinkColor = Color.Blue;
+
+                foreach (Zaznam z in tempList)
+                {
+              
+                   // this.Controls.Add(z.lNazev);
+                    z.lNazev.Dispose();
+
+                   // tempPoint.Y = tempPoint.Y + z.lNazev.Height;
+
+                }
+               // linkZaznam.LevySpodni = tempPoint;
+
+            }
+            #endregion Hide
+
+            /*switch (l.Text)
+            {
+                case "Zaklad":
+                    {
 
 
-           
+                        break;
+                    }
+                case "Hvezda":
+                    {
 
-         }
-        
+                        break;
+                    }
+                case "Sedm":
+                    {
 
-
-       private void posunSe(int cisloLinkLabelu, Label [] pole,int delkaPole,int posunO)
-        {
+                        break;
+                    }
 
         }
+        */
+
+
+            // MessageBox.Show("END");
+        }
+
 
 
 
