@@ -103,6 +103,7 @@ namespace WindowsFormsApplication1
                     z.lNazev.LinkColor = Color.Black;
                     z.lNazev.Location = tempPoint;
                     z.lNazev.AutoSize = true;
+                  
                     this.Controls.Add(z.lNazev);
 
                     tempPoint.Y = tempPoint.Y + z.lNazev.Height;
@@ -119,14 +120,14 @@ namespace WindowsFormsApplication1
 
                 foreach (Zaznam z in tempList)
                 {
-              
-                   // this.Controls.Add(z.lNazev);
-                    z.lNazev.Dispose();
-
-                   // tempPoint.Y = tempPoint.Y + z.lNazev.Height;
+                    
+                    linkZaznam.LevySpodni.Y = linkZaznam.LevySpodni.Y - linkZaznam.lNazev.Height;                    
+                    // TODO mozna predelat na hide
+                    this.Controls.Remove(z.lNazev);
 
                 }
-               // linkZaznam.LevySpodni = tempPoint;
+                linkZaznam.LevySpodni.X = linkZaznam.LevySpodni.X - 5;
+                
 
             }
             #endregion Hide
