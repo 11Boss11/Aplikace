@@ -44,24 +44,42 @@ namespace WindowsFormsApplication1
         public void ShowControls()
         {
             Point tempPoint = new Point(20,20);
+            Point tempPoint2 = new Point();
 
             foreach (Zaznam z in listZaznamu)
             {
-                // POKRACUJ neposunuje zaznamz kdyz pribide dalsi
-                // int i = 0;
-                //z.lNazev.Left = 20;
                 z.lNazev.Location = tempPoint;
+                tempPoint2 = tempPoint;
+                tempPoint2.X = tempPoint2.X + z.lNazev.Width;
+                
                 if (!z.MaPodzaznam()) z.lNazev.LinkColor = Color.Black;
                 else z.lNazev.LinkColor = Color.Blue;
-                z.lNazev.AutoSize = true;
-               // z.lNazev.Location = tempPoint;
+                //pridavani do formu
                 mForm.Controls.Add(z.lNazev);
+
+                //trackbar
+                z.TRtp.Location = tempPoint2;
+                z.TRtp.Tag = z.lNazev.Text;
+                mForm.Controls.Add(z.TRtp);
+
+                //label RTP
+                tempPoint2.X = tempPoint2.X + z.TRtp.Width;
+                z.lRtp.Text = z.TRtp.Value.ToString();
+                z.lRtp.Width = z.lNazev.Width / 3;
+                z.lRtp.Location = tempPoint2;
+                mForm.Controls.Add(z.lRtp);
+                //textbox
+                tempPoint2.X = tempPoint2.X + z.lRtp.Width;
+                z.TBVyhra.Location = tempPoint2;
+                mForm.Controls.Add(z.TBVyhra);
+                
+
+                
                 z.levyHorni = z.lNazev.Location;
-                z.vyskaZaznamu = z.lNazev.Height;
+                z.vyskaZaznamu = z.TRtp.Height;
                 z.LevySpodni = new Point(z.lNazev.Location.X, z.lNazev.Location.Y + z.vyskaZaznamu);
                 // z.LevySpodni = tempPoint;
 
-                // i++;
                 tempPoint = z.LevySpodni;
             }
         }

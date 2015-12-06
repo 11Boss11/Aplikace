@@ -57,14 +57,18 @@ namespace WindowsFormsApplication1
         public void setEventHandler(Zaznam zaznam)
         {
             zaznam.lNazev.Click += new EventHandler(this.linkLabel_Click);
+            zaznam.TRtp.Scroll += new EventHandler(this.trackBar1_Scroll);
         }
-        
+
+
+
         private void linkLabel_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("CLICK");
               LinkLabel l = sender as LinkLabel;
               Zaznam linkZaznam;
               Point tempPoint = new Point();
+            Point tempPoint2 = new Point();
             int tempVzdalenost = 0;
 
             List<Zaznam> tempList = S.GetZaznamy();
@@ -80,7 +84,7 @@ namespace WindowsFormsApplication1
                 {
                     //MessageBox.Show("Prochazim zaznam "+z.lNazev.Text);
                     tempPoint = z.LevySpodni;
-                    tempPoint.X = tempPoint.X + 5;
+                    tempPoint.X = tempPoint.X + z.lNazev.Width/5;
                     linkZaznam = z;
                     tempList = z.GetPodZaznamy();
 
@@ -97,12 +101,34 @@ namespace WindowsFormsApplication1
                   //prochazim podzaznamy
                   foreach (Zaznam z in tempList)
                   {
+                    //LinkLbel podzaznamy
                     z.lNazev.LinkColor = Color.Black;
                     z.lNazev.Location = tempPoint;
-                    z.lNazev.AutoSize = true;
-                  
+                    //z.lNazev.AutoSize = true;
                     this.Controls.Add(z.lNazev);
-                    z.vyskaZaznamu = z.lNazev.Height;
+
+                    tempPoint2 = tempPoint;
+                    //Trackbar
+                    tempPoint2.X += z.lNazev.Width;
+                    z.TRtp.Location = tempPoint2;
+                    z.TRtp.Tag = z.lNazev.Text;
+                    this.Controls.Add(z.TRtp);
+
+                   //lRTP
+                    tempPoint2.X += z.TRtp.Width;
+                    z.lRtp.Text = z.TRtp.Value.ToString();
+                    z.lRtp.Width = z.lRtp.Width/ 3;
+                    z.lRtp.Location = tempPoint2;
+                    this.Controls.Add(z.lRtp);
+
+                    //TBVyhra
+                    tempPoint2.X += z.TRtp.Width;
+                    z.TBVyhra.Location = tempPoint2;
+                    this.Controls.Add(z.TBVyhra);
+
+                    
+
+                    z.vyskaZaznamu = z.TRtp.Height;
                     tempPoint.Y = tempPoint.Y + z.vyskaZaznamu;
                     tempVzdalenost += z.vyskaZaznamu;
                      
@@ -125,6 +151,9 @@ namespace WindowsFormsApplication1
                     tempVzdalenost -= z.vyskaZaznamu;                    
                     // TODO mozna predelat na hide
                     this.Controls.Remove(z.lNazev);
+                    this.Controls.Remove(z.TRtp);
+                    this.Controls.Remove(z.lRtp);
+                    this.Controls.Remove(z.TBVyhra);
 
 
                 }
@@ -137,16 +166,55 @@ namespace WindowsFormsApplication1
             #endregion Hide
 
         }
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            TrackBar t = sender as TrackBar;
+            
+            List<Zaznam> tempList = S.GetZaznamy();
 
+            Zaznam linkZaznam;
+            //aby nebyl unasigned
+            linkZaznam = tempList.Last();
+            //hledam svuj zaznam
+            foreach (Zaznam z in tempList)
+            {
+
+                // TODO misto switche dej jako tuhle podminku dole
+                if (z.lNazev.Text == t.Tag.ToString())
+                {
+                    
+                    linkZaznam = z;
+                    
+                    break;
+                }
+
+            }
+            //jdu prepsat hodnoty
+
+            linkZaznam.lRtp.Text = t.Value.ToString();
+
+        }
 
         private void posunZaznam(Zaznam z,int yVzdalenost)
         {
             Point tempPoint = new Point();
+            
             z.levyHorni.Y = z.levyHorni.Y + yVzdalenost;
             z.LevySpodni.Y = z.LevySpodni.Y + yVzdalenost;
+            
             tempPoint.X = z.lNazev.Location.X;
             tempPoint.Y = z.lNazev.Location.Y + yVzdalenost;
+            //posouvam Linklabel
             z.lNazev.Location = tempPoint;
+            //posouvam TrackBar
+            tempPoint.X = z.TRtp.Location.X;
+            z.TRtp.Location = tempPoint;
+            //posouvam lRTP
+            tempPoint.X = z.lRtp.Location.X;
+            z.lRtp.Location = tempPoint;
+            //posouvam TBVyhra
+            tempPoint.X = z.TBVyhra.Location.X;
+            z.TBVyhra.Location = tempPoint;
 
         }
         private void preskup(List<Zaznam> listZaznamu,Zaznam zaznam,int vzdalenost)

@@ -22,6 +22,7 @@ namespace WindowsFormsApplication1
         public Label lRtp;
         public Label lWin;
         public Label lOtacky;
+        public TextBox TBVyhra;
         //umisteni
        public Point levyHorni;
         public Point LevySpodni;
@@ -32,9 +33,12 @@ namespace WindowsFormsApplication1
             
             lNazev = new LinkLabel();
             TRtp = new TrackBar();
+            lRtp = new Label();
+            TBVyhra = new TextBox();
 
             lNazev.Text = _nazev;
             TRtp.Maximum = _rozsahTrackbaru;
+            //TRtp.cha
 
             vyhra = _vyhra;
             mForm = _mForm;
