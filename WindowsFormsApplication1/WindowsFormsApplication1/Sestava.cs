@@ -43,26 +43,26 @@ namespace WindowsFormsApplication1
         } 
         public void ShowControls()
         {
+            Point tempPoint = new Point(20,20);
+
             foreach (Zaznam z in listZaznamu)
             {
-                z.lNazev.Left = 20;
+                // POKRACUJ neposunuje zaznamz kdyz pribide dalsi
+                // int i = 0;
+                //z.lNazev.Left = 20;
+                z.lNazev.Location = tempPoint;
                 if (!z.MaPodzaznam()) z.lNazev.LinkColor = Color.Black;
                 else z.lNazev.LinkColor = Color.Blue;
                 z.lNazev.AutoSize = true;
-                //z.lNazev 
+               // z.lNazev.Location = tempPoint;
                 mForm.Controls.Add(z.lNazev);
                 z.levyHorni = z.lNazev.Location;
-                z.LevySpodni = new Point(z.lNazev.Location.X, z.lNazev.Location.Y + z.lNazev.Height);
+                z.vyskaZaznamu = z.lNazev.Height;
+                z.LevySpodni = new Point(z.lNazev.Location.X, z.lNazev.Location.Y + z.vyskaZaznamu);
+                // z.LevySpodni = tempPoint;
 
-
-                /*abel NewLabel = new Label();
-            NewLabel.Width = 50; // Space little less than 2/3
-            NewLabel.Height = 25;
-            NewLabel.Left = 0; // Start at the left edge of the panel1
-            NewLabel.Top = TopValue;
-            this.Controls.Add(NewLabel);
-            NewLabel.TextAlign = ContentAlignment.MiddleRight;
-            NewLabel.Text = LabelName;*/
+                // i++;
+                tempPoint = z.LevySpodni;
             }
         }
 

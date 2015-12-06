@@ -32,10 +32,10 @@ namespace WindowsFormsApplication1
         /// </summary>
         private void InitializeComponent()
         {
-            this.trackbar1 = new System.Windows.Forms.TrackBar();
+/*            this.trackbar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.trackbar1)).BeginInit();
             this.SuspendLayout();
-          
+          */
             // 
             // Form1
             // 
@@ -45,7 +45,6 @@ namespace WindowsFormsApplication1
             this.Name = "Form1";
             this.Text = "Moje aplikace";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.trackbar1)).EndInit();
             this.ResumeLayout(false);
             
 

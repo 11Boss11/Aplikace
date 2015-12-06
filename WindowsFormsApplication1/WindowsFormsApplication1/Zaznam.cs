@@ -25,6 +25,7 @@ namespace WindowsFormsApplication1
         //umisteni
        public Point levyHorni;
         public Point LevySpodni;
+       public int vyskaZaznamu;
 
         public Zaznam(string _nazev,int _rozsahTrackbaru,float _vyhra,Form1 _mForm)
         {
@@ -37,6 +38,7 @@ namespace WindowsFormsApplication1
 
             vyhra = _vyhra;
             mForm = _mForm;
+
         }
         public void AddPodZaznam(string _nazev, int _rozsahTrackbaru, float _vyhra, Form1 _mForm)
         {
