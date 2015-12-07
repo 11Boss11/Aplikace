@@ -14,8 +14,8 @@ namespace WindowsFormsApplication1
       
         List<Zaznam> listPodZaznamu = new List<Zaznam>();
         Form1 mForm;
-        float rtp;
-        float vyhra;
+        public double rtp;
+        public double vyhra;
         //Controls
         public LinkLabel lNazev;
         public TrackBar TRtp;
@@ -28,25 +28,27 @@ namespace WindowsFormsApplication1
         public Point LevySpodni;
        public int vyskaZaznamu;
 
-        public Zaznam(string _nazev,int _rozsahTrackbaru,float _vyhra,Form1 _mForm)
+        public Zaznam(string _nazev,int _rozsahTrackbaru,double _rtp,double _vyhra,Form1 _mForm)
         {
             
             lNazev = new LinkLabel();
             TRtp = new TrackBar();
             lRtp = new Label();
             TBVyhra = new TextBox();
+            lOtacky = new Label();
 
             lNazev.Text = _nazev;
             TRtp.Maximum = _rozsahTrackbaru;
-            //TRtp.cha
 
+            //TRtp.cha
+            rtp = _rtp;
             vyhra = _vyhra;
             mForm = _mForm;
 
         }
-        public void AddPodZaznam(string _nazev, int _rozsahTrackbaru, float _vyhra, Form1 _mForm)
+        public void AddPodZaznam(string _nazev, int _rozsahTrackbaru,double _rtp, double _vyhra, Form1 _mForm)
         {
-            listPodZaznamu.Add(new Zaznam(_nazev, _rozsahTrackbaru, _vyhra, _mForm));
+            listPodZaznamu.Add(new Zaznam(_nazev, _rozsahTrackbaru,_rtp, _vyhra, _mForm));
         }
         public List<Zaznam> GetPodZaznamy()
         {

@@ -34,15 +34,15 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             // work();
             S = new Sestava(95,this);
-            S.AddZaznam("Zaklad", 100, 324, this);
-            S.AddPodZaznam("cau", 100, 324, this);
-            S.AddPodZaznam("neco", 100, 324, this);
-            S.AddPodZaznam("necoDalsiho", 100, 324, this);
+            S.AddZaznam("Zaklad", 10000,52.6, 40, this);
+            S.AddPodZaznam("cau", 1000,10.00, 13.75, this);
+            S.AddPodZaznam("neco", 1000,6.6,155, this);
+            S.AddPodZaznam("necoDalsiho", 1000,9.52, 525, this);
             
-            S.AddZaznam("Hvezda", 100, 324, this);
-            S.AddPodZaznam("cau", 100, 324, this);
-            S.AddPodZaznam("neco", 100, 324, this);
-            S.AddPodZaznam("necoDalsiho", 100, 324, this);
+            S.AddZaznam("Hvezda", 1000,4, 324, this);
+            S.AddPodZaznam("cau", 1000,5, 324, this);
+            S.AddPodZaznam("neco", 1000,6, 324, this);
+            S.AddPodZaznam("necoDalsiho", 1000,7, 324, this);
 
             S.ShowControls();
         }
@@ -104,26 +104,30 @@ namespace WindowsFormsApplication1
                     //LinkLbel podzaznamy
                     z.lNazev.LinkColor = Color.Black;
                     z.lNazev.Location = tempPoint;
+
                     //z.lNazev.AutoSize = true;
                     this.Controls.Add(z.lNazev);
 
                     tempPoint2 = tempPoint;
                     //Trackbar
                     tempPoint2.X += z.lNazev.Width;
+                    z.TRtp.Value =Convert.ToInt32( z.rtp*100);
                     z.TRtp.Location = tempPoint2;
-                    z.TRtp.Tag = z.lNazev.Text;
+                    z.TRtp.Tag =l.Text+ z.lNazev.Text;
+                    z.TRtp.Scroll += new EventHandler(this.trackBar1_Scroll);
                     this.Controls.Add(z.TRtp);
 
                    //lRTP
                     tempPoint2.X += z.TRtp.Width;
-                    z.lRtp.Text = z.TRtp.Value.ToString();
-                    z.lRtp.Width = z.lRtp.Width/ 3;
+                    z.lRtp.Text =((double)z.TRtp.Value/100).ToString();
+                    z.lRtp.Width = z.lNazev.Width/ 3;
                     z.lRtp.Location = tempPoint2;
                     this.Controls.Add(z.lRtp);
 
                     //TBVyhra
-                    tempPoint2.X += z.TRtp.Width;
+                    tempPoint2.X += z.lRtp.Width;
                     z.TBVyhra.Location = tempPoint2;
+                    z.TBVyhra.Text = z.vyhra.ToString();
                     this.Controls.Add(z.TBVyhra);
 
                     
@@ -176,22 +180,40 @@ namespace WindowsFormsApplication1
             //aby nebyl unasigned
             linkZaznam = tempList.Last();
             //hledam svuj zaznam
+            bool jump = false;
             foreach (Zaznam z in tempList)
             {
 
                 // TODO misto switche dej jako tuhle podminku dole
+
                 if (z.lNazev.Text == t.Tag.ToString())
                 {
-                    
+                    //MessageBox.Show(z.lNazev.Text + " " + t.Tag.ToString());
                     linkZaznam = z;
-                    
                     break;
                 }
+                
+                    
+               
+                foreach (Zaznam x in z.GetPodZaznamy())
+                {
+                   // MessageBox.Show(x.lNazev.Text + " " + t.Tag.ToString());
+                    if (z.lNazev.Text+x.lNazev.Text == (t.Tag.ToString()))
+                    {
+                        
+                        linkZaznam = x;
+                        jump = true;
+
+                        break;
+                    }
+                }
+                if (jump) break;
 
             }
+            //tempList = z.GetPodZaznamy();
             //jdu prepsat hodnoty
-
-            linkZaznam.lRtp.Text = t.Value.ToString();
+        
+            linkZaznam.lRtp.Text =  ((double) t.Value/100).ToString();
 
         }
 
