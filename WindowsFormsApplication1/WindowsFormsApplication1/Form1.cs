@@ -40,9 +40,9 @@ namespace WindowsFormsApplication1
             S.AddPodZaznam("necoDalsiho", 1000,9.52, 525, this);
             
             S.AddZaznam("Hvezda", 1000,4, 324, this);
-            S.AddPodZaznam("cau", 1000,5, 324, this);
-            S.AddPodZaznam("neco", 1000,6, 324, this);
-            S.AddPodZaznam("necoDalsiho", 1000,7, 324, this);
+            S.AddPodZaznam("cau", 1000,0, 324, this);
+            S.AddPodZaznam("neco", 1000,0, 324, this);
+            S.AddPodZaznam("necoDalsiho", 1000,0, 324, this);
 
             S.ShowControls();
         }
@@ -178,8 +178,7 @@ namespace WindowsFormsApplication1
 
             Zaznam linkZaznam;
             //pro posouvani ostatnich
-            int sum = 0;
-            int newSum = 0;
+            Zaznam hlavniZaznam;
 
             //aby nebyl unasigned
             linkZaznam = tempList.Last();
@@ -194,10 +193,13 @@ namespace WindowsFormsApplication1
                 {
                     //MessageBox.Show(z.lNazev.Text + " " + t.Tag.ToString());
                     linkZaznam = z;
+                    updateTrackBar(tempList, t, S.getCiloveRTP());
                     break;
+                    
                 }
+                hlavniZaznam = z;
 
-
+                
 
                 foreach (Zaznam x in z.GetPodZaznamy())
                 {
@@ -206,6 +208,8 @@ namespace WindowsFormsApplication1
                     {
 
                         linkZaznam = x;
+                        
+                        updateTrackBar(z.GetPodZaznamy(), t, Convert.ToDouble(z.lRtp.Text));
                         jump = true;
 
                         break;
@@ -214,44 +218,75 @@ namespace WindowsFormsApplication1
                 if (jump) break;
 
             }
-            //tempList = z.GetPodZaznamy();
+
             //jdu prepsat hodnoty
 
             linkZaznam.lRtp.Text = ((double)t.Value / 100).ToString();
 
 
-            //posouvani ostatnich
-            foreach (Zaznam z in tempList)
-            {
+           
+           
 
-                if (z.lNazev.Text != t.Tag.ToString())
+
+            
+
+        }
+        
+        private void updateTrackBar(List<Zaznam> tempList, TrackBar t,double ciloveRTP)
+        {
+            int sum = getSum(tempList, t.Tag.ToString());
+            // MessageBox.Show(sum.ToString());
+            if (sum == 0)
+            {
+                if (t.Value >= ciloveRTP * 100)
                 {
-                    sum += z.TRtp.Value;
-                   
+                    t.Value = Convert.ToInt32(100 * ciloveRTP);
+                    foreach (Zaznam z in tempList)
+                        if (z.TRtp.Tag.ToString() == t.Tag.ToString())
+                        {
+                            z.lRtp.Text = ciloveRTP.ToString();
+                            return;
+                        }
                 }
+                return;
             }
-            newSum = Convert.ToInt32((100* S.getCiloveRTP())) - t.Value;
+            int newSum = Convert.ToInt32(100 * ciloveRTP) - t.Value;
             if (newSum < 0) newSum = 0;
             foreach (Zaznam z in tempList)
             {
-
-                if (z.lNazev.Text != t.Tag.ToString()&&z.TRtp.Value!=0)
+                if (z.lNazev.Text != t.Tag.ToString() && z.TRtp.Value != 0)
                 {
-                    if (z.TRtp.Value * newSum / sum > z.TRtp.Maximum) z.TRtp.Value = z.TRtp.Maximum;
-                    else
+                    if (z.TRtp.Value * newSum / sum > z.TRtp.Maximum)
                     {
-                        z.TRtp.Value = z.TRtp.Value * newSum / sum;
+                        z.TRtp.Value = z.TRtp.Maximum;
+                        z.lRtp.Text = ((double)z.TRtp.Maximum / 100).ToString();
                     }
-                    
-                    z.lRtp.Text = ((double)z.TRtp.Value / 100).ToString();
-                    
 
+                    else
+                        setTrackbar(z, z.TRtp.Value * newSum / sum);
                 }
             }
-            
-            
         }
+        private void setTrackbar(Zaznam z,int hodnota)
+        {
+            z.TRtp.Value = hodnota;
+            z.lRtp.Text = ((double)z.TRtp.Value / 100).ToString();
+        }
+        private int getSum(List<Zaznam> templist,string trackbarTag)
+        {
+            int sum = 0;
+            foreach (Zaznam z in templist)
+            {
 
+                if (z.TRtp.Tag.ToString() != trackbarTag.ToString())
+                {
+                   // MessageBox.Show(z.TRtp.Tag +" !=  "+trackbarTag);
+                    sum += z.TRtp.Value;
+                    
+                }
+            }
+            return sum;
+        }
         private void posunZaznam(Zaznam z,int yVzdalenost)
         {
             Point tempPoint = new Point();
