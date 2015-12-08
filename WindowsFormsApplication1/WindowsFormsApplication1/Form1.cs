@@ -173,10 +173,14 @@ namespace WindowsFormsApplication1
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             TrackBar t = sender as TrackBar;
-            
+
             List<Zaznam> tempList = S.GetZaznamy();
 
             Zaznam linkZaznam;
+            //pro posouvani ostatnich
+            int sum = 0;
+            int newSum = 0;
+
             //aby nebyl unasigned
             linkZaznam = tempList.Last();
             //hledam svuj zaznam
@@ -192,15 +196,15 @@ namespace WindowsFormsApplication1
                     linkZaznam = z;
                     break;
                 }
-                
-                    
-               
+
+
+
                 foreach (Zaznam x in z.GetPodZaznamy())
                 {
-                   // MessageBox.Show(x.lNazev.Text + " " + t.Tag.ToString());
-                    if (z.lNazev.Text+x.lNazev.Text == (t.Tag.ToString()))
+                    // MessageBox.Show(x.lNazev.Text + " " + t.Tag.ToString());
+                    if (z.lNazev.Text + x.lNazev.Text == (t.Tag.ToString()))
                     {
-                        
+
                         linkZaznam = x;
                         jump = true;
 
@@ -212,9 +216,40 @@ namespace WindowsFormsApplication1
             }
             //tempList = z.GetPodZaznamy();
             //jdu prepsat hodnoty
-        
-            linkZaznam.lRtp.Text =  ((double) t.Value/100).ToString();
 
+            linkZaznam.lRtp.Text = ((double)t.Value / 100).ToString();
+
+
+            //posouvani ostatnich
+            foreach (Zaznam z in tempList)
+            {
+
+                if (z.lNazev.Text != t.Tag.ToString())
+                {
+                    sum += z.TRtp.Value;
+                   
+                }
+            }
+            newSum = Convert.ToInt32((100* S.getCiloveRTP())) - t.Value;
+            if (newSum < 0) newSum = 0;
+            foreach (Zaznam z in tempList)
+            {
+
+                if (z.lNazev.Text != t.Tag.ToString()&&z.TRtp.Value!=0)
+                {
+                    if (z.TRtp.Value * newSum / sum > z.TRtp.Maximum) z.TRtp.Value = z.TRtp.Maximum;
+                    else
+                    {
+                        z.TRtp.Value = z.TRtp.Value * newSum / sum;
+                    }
+                    
+                    z.lRtp.Text = ((double)z.TRtp.Value / 100).ToString();
+                    
+
+                }
+            }
+            
+            
         }
 
         private void posunZaznam(Zaznam z,int yVzdalenost)

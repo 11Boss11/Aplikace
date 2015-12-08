@@ -24,7 +24,10 @@ namespace WindowsFormsApplication1
             mForm = _mForm;
 
         }
-
+        public double getCiloveRTP()
+        {
+            return ciloveRTP;
+        }
         public void AddZaznam(string _nazev,int _rozsahTrackbaru,double _rtp,double _vyhra,Form1 _mForm)
         {
             listZaznamu.Add(new Zaznam( _nazev, _rozsahTrackbaru,_rtp,  _vyhra, _mForm));
@@ -78,7 +81,7 @@ namespace WindowsFormsApplication1
                 //lotackz
                 tempPoint2.X= tempPoint2.X + z.TBVyhra.Width;
                 z.lOtacky.Location = tempPoint2;
-                z.lOtacky.Text = (1 /(( z.rtp * 5) /( 100 * z.vyhra))).ToString();
+                z.lOtacky.Text = (1 /(( z.rtp * 5) /( 100 * z.vyhra)    )).ToString();
                 mForm.Controls.Add(z.lOtacky);
                 
                 z.levyHorni = z.lNazev.Location;
