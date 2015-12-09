@@ -176,12 +176,13 @@ namespace WindowsFormsApplication1
 
             List<Zaznam> tempList = S.GetZaznamy();
 
-            Zaznam linkZaznam;
+          
             //pro posouvani ostatnich
             Zaznam hlavniZaznam;
+            Zaznam linkZaznam;
 
             //aby nebyl unasigned
-            linkZaznam = tempList.Last();
+           
             //hledam svuj zaznam
             bool jump = false;
             foreach (Zaznam z in tempList)
@@ -192,9 +193,14 @@ namespace WindowsFormsApplication1
                 if (z.lNazev.Text == t.Tag.ToString())
                 {
                     //MessageBox.Show(z.lNazev.Text + " " + t.Tag.ToString());
-                    linkZaznam = z;
+                    
                     updateTrackBar(tempList, t, S.getCiloveRTP());
-                    break;
+                    z.lRtp.Text = ((double)t.Value / 100).ToString();
+                    foreach (Zaznam x in tempList)
+                    {
+                        updatePodZanamy(x);
+                    }
+                        break;
                     
                 }
                 hlavniZaznam = z;
@@ -207,9 +213,9 @@ namespace WindowsFormsApplication1
                     if (z.lNazev.Text + x.lNazev.Text == (t.Tag.ToString()))
                     {
 
-                        linkZaznam = x;
                         
                         updateTrackBar(z.GetPodZaznamy(), t, Convert.ToDouble(z.lRtp.Text));
+                        x.lRtp.Text = ((double)t.Value / 100).ToString();
                         jump = true;
 
                         break;
@@ -221,7 +227,7 @@ namespace WindowsFormsApplication1
 
             //jdu prepsat hodnoty
 
-            linkZaznam.lRtp.Text = ((double)t.Value / 100).ToString();
+            
 
 
            
@@ -231,7 +237,34 @@ namespace WindowsFormsApplication1
             
 
         }
-        
+        private void updatePodZanamy(Zaznam z)
+        {
+            int sum = 0;
+            bool max;
+            foreach (Zaznam x in z.GetPodZaznamy())
+            {
+              sum += x.TRtp.Value;
+            }
+            if (sum == 0) return;
+
+            foreach (Zaznam x in z.GetPodZaznamy())
+            {
+                max = false;
+              // MessageBox.Show("sum= "+sum+ "  " + z.TRtp.Value +" * " +x.TRtp.Value+" / " + sum);
+              //  MessageBox.Show( (double) z.TRtp.Value * x.TRtp.Value / sum);
+                if (x.TRtp.Maximum<z.TRtp.Value*x.TRtp.Value/sum)
+                {
+                    //MessageBox.Show(x.TRtp.Maximum + " < " + z.TRtp.Value * x.TRtp.Value / sum);
+                    x.TRtp.Value = x.TRtp.Maximum;
+                    max = true;
+                    
+                    
+                }
+
+                if(!max)x.TRtp.Value = z.TRtp.Value * x.TRtp.Value / sum;
+                x.lRtp.Text = ((double)x.TRtp.Value / 100).ToString();
+            }
+        }
         private void updateTrackBar(List<Zaznam> tempList, TrackBar t,double ciloveRTP)
         {
             int sum = getSum(tempList, t.Tag.ToString());
@@ -263,7 +296,7 @@ namespace WindowsFormsApplication1
                     }
 
                     else
-                        setTrackbar(z, z.TRtp.Value * newSum / sum);
+                        setTrackbar(z,Convert.ToInt32( z.TRtp.Value * ((double)newSum / sum)));
                 }
             }
         }
